@@ -126,60 +126,51 @@ namespace test
     [CompilerGenerated]
     public static class Program
     {
-        private static int[] Memory = new int[4096];
+        private static readonly byte[] Memory = new byte[4096];
         private static int CellCounter = 0;
-
-        private static void Increment(int ammount)
-        {
-            Memory[CellCounter] += ammount;
-            if (Memory[CellCounter] &gt; 255)
-                Memory[CellCounter] = Memory[CellCounter] - 256;
-            else if (Memory[CellCounter] &lt; 0)
-                Memory[CellCounter] = 255 + Memory[CellCounter] + 1;
-        }
 
         public static void Main(string[] args)
         {
-                        Increment(10);
+            Memory[CellCounter] += 10;
             while (Memory[CellCounter] != 0)
             {
                 CellCounter += 1;
-                Increment(7);
+                Memory[CellCounter] += 7;
                 CellCounter += 1;
-                Increment(10);
+                Memory[CellCounter] += 10;
                 CellCounter += 1;
-                Increment(3);
+                Memory[CellCounter] += 3;
                 CellCounter += 1;
-                Increment(1);
+                Memory[CellCounter]++;
                 CellCounter += -4;
-                Increment(-1);
+                Memory[CellCounter]--;
             }
             CellCounter += 1;
-            Increment(2);
+            Memory[CellCounter] += 2;
             Console.Write((char)Memory[CellCounter]);
             CellCounter += 1;
-            Increment(1);
+            Memory[CellCounter]++;
             Console.Write((char)Memory[CellCounter]);
-            Increment(7);
+            Memory[CellCounter] += 7;
             Console.Write((char)Memory[CellCounter]);
-            Increment(3);
+            Memory[CellCounter] += 3;
             Console.Write((char)Memory[CellCounter]);
             CellCounter += 1;
-            Increment(2);
+            Memory[CellCounter] += 2;
             Console.Write((char)Memory[CellCounter]);
             CellCounter += -2;
-            Increment(15);
+            Memory[CellCounter] += 15;
             Console.Write((char)Memory[CellCounter]);
             CellCounter += 1;
             Console.Write((char)Memory[CellCounter]);
-            Increment(3);
+            Memory[CellCounter] += 3;
             Console.Write((char)Memory[CellCounter]);
-            Increment(-6);
+            Memory[CellCounter] += -6;
             Console.Write((char)Memory[CellCounter]);
-            Increment(-8);
+            Memory[CellCounter] += -8;
             Console.Write((char)Memory[CellCounter]);
             CellCounter += 1;
-            Increment(1);
+            Memory[CellCounter]++;
             Console.Write((char)Memory[CellCounter]);
             CellCounter += 1;
             Console.Write((char)Memory[CellCounter]);
@@ -197,26 +188,17 @@ namespace test
     [CompilerGenerated]
     public static class Program
     {
-        private static int[] Memory = new int[4096];
+        private static readonly byte[] Memory = new byte[4096];
         private static int CellCounter = 0;
-
-        private static void Increment(int ammount)
-        {
-            Memory[CellCounter] += ammount;
-            if (Memory[CellCounter] &gt; 255)
-                Memory[CellCounter] = Memory[CellCounter] - 256;
-            else if (Memory[CellCounter] &lt; 0)
-                Memory[CellCounter] = 255 + Memory[CellCounter] + 1;
-        }
 
         public static void Main(string[] args)
         {
-                        Console.Write((char)Memory[CellCounter]);
-            Increment(1);
+            Console.Write((char)Memory[CellCounter]);
+            Memory[CellCounter]++;
             while (Memory[CellCounter] != 0)
             {
                 Console.Write((char)Memory[CellCounter]);
-                Increment(1);
+                Memory[CellCounter]++;
             }
 
         }

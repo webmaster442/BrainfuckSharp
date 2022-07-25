@@ -45,7 +45,12 @@ namespace BrainFuckSharp.Lib
             {
                 if (instruction is Increment increment)
                 {
-                    WriteLine($"Increment({increment.Value});", level);
+                    if (increment.Value == 1)
+                        WriteLine("Memory[CellCounter]++;", level);
+                    else if (increment.Value == -1)
+                        WriteLine("Memory[CellCounter]--;", level);
+                    else
+                        WriteLine($"Memory[CellCounter] += {increment.Value};", level);
                 }
                 else if (instruction is PointerMove pointerMove)
                 {

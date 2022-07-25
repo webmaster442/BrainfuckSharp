@@ -6,17 +6,8 @@ namespace %namespace%
     [CompilerGenerated]
     public static class Program
     {
-        private static readonly int[] Memory = new int[%memorylimit%];
+        private static readonly byte[] Memory = new byte[%memorylimit%];
         private static int CellCounter = 0;
-
-        private static void Increment(int ammount)
-        {
-            Memory[CellCounter] += ammount;
-            if (Memory[CellCounter] > 255)
-                Memory[CellCounter] = Memory[CellCounter] - 256;
-            else if (Memory[CellCounter] < 0)
-                Memory[CellCounter] = 255 + Memory[CellCounter] + 1;
-        }
 
         public static void Main(string[] args)
         {

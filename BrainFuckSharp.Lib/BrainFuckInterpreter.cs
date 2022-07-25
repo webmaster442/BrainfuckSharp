@@ -6,13 +6,13 @@ namespace BrainFuckSharp.Lib
     public class BrainFuckInterpreter
     {
         private readonly IBrainFuckConsole _console;
-        private readonly int[] _memory;
+        private readonly byte[] _memory;
         private int _programCounter;
 
         public BrainFuckInterpreter(IBrainFuckConsole console, int memoryLimit = 4096)
         {
             _console = console;
-            _memory = new int[memoryLimit];
+            _memory = new byte[memoryLimit];
         }
 
         public void Execute(string program)
@@ -29,8 +29,8 @@ namespace BrainFuckSharp.Lib
             {
                 if (instruction is Increment increment)
                 {
-                    _memory[_programCounter] += increment.Value;
-                    ClampToByteArithmetics();
+                    int value = _memory[_programCounter] + increment.Value;
+                    _memory[_programCounter] = (byte)value;
                 }
                 else if (instruction is PointerMove pointerMove)
                 {
@@ -49,30 +49,14 @@ namespace BrainFuckSharp.Lib
                     while (_memory[_programCounter] != 0)
                     {
                         RunInstructions(loop.Instructions, true);
-                        if (_memory[_programCounter] < 0 || _memory[_programCounter] > 255)
-                            ClampToByteArithmetics();
                     }
                 }
             }
         }
 
-        private void ClampToByteArithmetics()
-        {
-            //standard uint8_t behavior replication
-            if (_memory[_programCounter] > 255)
-            {
-                _memory[_programCounter] = _memory[_programCounter] - 255 - 1;
-            }
-            else if (_memory[_programCounter] < 0)
-            {
-                //in this case _memory[_programCounter] is minus! so we add!
-                _memory[_programCounter] = 255 + _memory[_programCounter] + 1;
-            }
-        }
-
         private void DoInput()
         {
-            _memory[_programCounter] = _console.Read();
+            _memory[_programCounter] = (byte)_console.Read();
         }
 
         private void DoOutput()

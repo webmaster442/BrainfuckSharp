@@ -3,7 +3,7 @@
     [TestFixture]
     public class InterpreterTests
     {
-        [Timeout(3000)]
+        [Timeout(1000)]
         [TestCase("", "")]
         [TestCase("----[---->+<]>++.", "A")]
         [TestCase("----[---->+<]>++.-[-->+++<]>+.", "Aa")]
@@ -22,6 +22,7 @@
             Assert.That(testConsole.ToString(), Is.EqualTo(expected));
         }
 
+        [Timeout(1000)]
         [Test]
         public void EnsureThat_Interpreter_Loop_Works()
         {

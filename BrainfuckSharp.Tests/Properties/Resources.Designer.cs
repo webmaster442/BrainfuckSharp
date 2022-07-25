@@ -69,16 +69,17 @@ namespace BrainFuckSharp.Tests.Properties {
         ///    [CompilerGenerated]
         ///    public static class Program
         ///    {
-        ///        private static int[] Memory = new int[4096];
+        ///        private static readonly byte[] Memory = new byte[4096];
         ///        private static int CellCounter = 0;
         ///
-        ///        private static void Increment(int ammount)
+        ///        public static void Main(string[] args)
         ///        {
-        ///            Memory[CellCounter] += ammount;
-        ///            if (Memory[CellCounter] &gt; 255)
-        ///                Memory[CellCounter] = Memory[CellCounter] - 256;
-        ///            else if (Memory[CellCounter] &lt; 0)
-        ///      [rest of string was truncated]&quot;;.
+        ///            Memory[CellCounter] += 10;
+        ///            while (Memory[CellCounter] != 0)
+        ///            {
+        ///                CellCounter += 1;
+        ///                Memory[CellCounter] += 7;
+        ///                CellC [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HelloWorld {
             get {
@@ -95,16 +96,16 @@ namespace BrainFuckSharp.Tests.Properties {
         ///    [CompilerGenerated]
         ///    public static class Program
         ///    {
-        ///        private static int[] Memory = new int[4096];
+        ///        private static readonly byte[] Memory = new byte[4096];
         ///        private static int CellCounter = 0;
         ///
-        ///        private static void Increment(int ammount)
+        ///        public static void Main(string[] args)
         ///        {
-        ///            Memory[CellCounter] += ammount;
-        ///            if (Memory[CellCounter] &gt; 255)
-        ///                Memory[CellCounter] = Memory[CellCounter] - 256;
-        ///            else if (Memory[CellCounter] &lt; 0)
-        ///      [rest of string was truncated]&quot;;.
+        ///            Console.Write((char)Memory[CellCounter]);
+        ///            Memory[CellCounter]++;
+        ///            while (Memory[CellCounter] != 0)
+        ///            {
+        ///                Console.Write((char)Memory[CellC [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SimpleProgram {
             get {
