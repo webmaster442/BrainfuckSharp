@@ -39,9 +39,6 @@ compilerCommand.Add(@namespace);
 compilerCommand.Add(inputFile);
 compilerCommand.Add(output);
 
-//compilerCommand.SetHandler(DoCompile);
-
-
 compilerCommand.SetHandler((memoryLimitValue, @namespaceValue, inputFileValue, outputValue) =>
 {
     var options = new BrainFuckSharp.CompilerOptions
