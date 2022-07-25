@@ -9,6 +9,12 @@ namespace %namespace%
         private static readonly byte[] Memory = new byte[%memorylimit%];
         private static int CellCounter = 0;
 
+        internal static void MultiplyAdd(int offset, int value)
+        {
+            int result = Memory[CellCounter] * value;
+            Memory[CellCounter + offset] = (byte)result;
+        }
+
         public static void Main(string[] args)
         {
 %code%

@@ -38,14 +38,14 @@ namespace BrainFuckSharp.Lib.Internals
                 }
                 else
                 {
-                    result.Add(Create(current, type, sum));
+                    result.AddRange(Create(current, type, sum));
                     current = instructions[i];
                     sum = SetSumFromCurrent(current);
                     type = TokenType.Other;
                 }
             }
 
-            result.Add(Create(current, type, sum));
+            result.AddRange(Create(current, type, sum));
 
 
             return result;
@@ -53,28 +53,82 @@ namespace BrainFuckSharp.Lib.Internals
 
         private static int SetSumFromCurrent(IInstruction current)
         {
-            if (current is IValue value)
-                return value.Value;
-            return 1;
+            return current is IValue value ? value.Value : 1;
         }
 
-        private static IInstruction Create(IInstruction instruction, TokenType type, int sum)
+        private static IEnumerable<IInstruction> Create(IInstruction instruction, TokenType type, int sum)
         {
-            return type switch
+            switch(type)
             {
-                TokenType.Other => OptimizeIfLoop(instruction),
-                TokenType.Pointer => new PointerMove { Value = sum },
-                TokenType.Increment => new Increment { Value = sum },
-                _ => throw new InvalidOperationException("Unknown token type"),
-            };
+                case TokenType.Pointer:
+                    yield return new PointerMove { Value = sum };
+                    break;
+                case TokenType.Increment:
+                    yield return new Increment { Value = sum };
+                    break;
+                case TokenType.Other:
+                    if (instruction is Loop loop)
+                    {
+                        if (CanUnroll(loop))
+                        {
+                            foreach (var inst in Unroll(loop))
+                            {
+                                yield return inst;
+                            }
+                        }
+                        else
+                        {
+                            yield return new Loop { Instructions = Compress(loop.Instructions) };
+                        }
+                    }
+                    else
+                    {
+                        yield return instruction;
+                    }
+                    break;
+            }
         }
 
-        private static IInstruction OptimizeIfLoop(IInstruction instruction)
+        private static bool CanUnroll(Loop loop)
         {
-            if (instruction is Loop loop)
-                return new Loop { Instructions = Compress(loop.Instructions) };
+            return loop.All(x => x is Increment or PointerMove);
+        }
+
+        private static IEnumerable<IInstruction> Unroll(Loop loop)
+        {
+            Dictionary<int, int> deltas = new();
+            int offset = 0;
+            foreach (var cmd in loop.Instructions)
+            {
+                if (cmd is Increment inc)
+                {
+                    if (deltas.ContainsKey(offset))
+                        deltas[offset] = deltas[offset] + inc.Value;
+                    else
+                        deltas[offset] = inc.Value;
+                }
+                else if (cmd is PointerMove pointerMove)
+                {
+                    offset += pointerMove.Value;
+                }
+            }
+
+            if (offset != 0 || deltas[0] != -1)
+            {
+                yield return new Loop { Instructions = Compress(loop.Instructions) };
+            }
             else
-                return instruction;
+            {
+                deltas.Remove(0);
+                foreach (var off in deltas.OrderBy(x => x.Key))
+                {
+                    yield return new MultAdd
+                    {
+                        Offset = off.Key,
+                        Value = off.Value
+                    };
+                }
+            }
         }
     }
 }

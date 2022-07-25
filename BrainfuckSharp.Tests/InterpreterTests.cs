@@ -33,7 +33,6 @@
 
             char[]? expected = Enumerable.Range(0, 256).Select(i => (char)i).ToArray();
 
-
             Assert.That(str.ToArray(), Is.EqualTo(expected));
 
         }

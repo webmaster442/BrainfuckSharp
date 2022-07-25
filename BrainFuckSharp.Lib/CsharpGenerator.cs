@@ -52,6 +52,10 @@ namespace BrainFuckSharp.Lib
                     else
                         WriteLine($"Memory[CellCounter] += {increment.Value};", level);
                 }
+                else if (instruction is MultAdd multAdd)
+                {
+                    WriteLine($"MultiplyAdd({multAdd.Offset}, {multAdd.Value});", level);
+                }
                 else if (instruction is PointerMove pointerMove)
                 {
                     WriteLine($"CellCounter += {pointerMove.Value};", level);
@@ -70,6 +74,10 @@ namespace BrainFuckSharp.Lib
                 else if (instruction is Input)
                 {
                     WriteLine("Memory[CellCounter] = Console.Read();", level);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Unknown instruction");
                 }
             }
         }

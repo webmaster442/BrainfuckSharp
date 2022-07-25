@@ -75,11 +75,12 @@ namespace BrainFuckSharp.Tests.Properties {
         ///        public static void Main(string[] args)
         ///        {
         ///            Memory[CellCounter] += 10;
-        ///            while (Memory[CellCounter] != 0)
-        ///            {
-        ///                CellCounter += 1;
-        ///                Memory[CellCounter] += 7;
-        ///                CellC [rest of string was truncated]&quot;;.
+        ///            MultiplyAdd(1, 7);
+        ///            MultiplyAdd(2, 10);
+        ///            MultiplyAdd(3, 3);
+        ///            MultiplyAdd(4, 1);
+        ///            CellCounter += 1;
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HelloWorld {
             get {

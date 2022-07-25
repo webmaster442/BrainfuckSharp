@@ -58,6 +58,21 @@
         }
 
         [Test]
+        public void EnsureThat_TokenCompressor_LoopUnroll()
+        {
+            var raw = Tokenizer.Tokenize("[->+++>>>--<<<<]");
+            var result = TokenCompressor.Compress(raw);
+
+            IInstruction[]? expected = new IInstruction[]
+            {
+                new MultAdd { Offset = 1, Value = 3 },
+                new MultAdd { Offset = 4, Value = -2 },
+            };
+
+            CollectionAssert.AreEqual(expected, result);
+        }
+
+        [Test]
         public void EnsureThat_TokenCompressor_Compresses_Complex2()
         {
             IList<IInstruction>? raw = Tokenizer.Tokenize(">>.++[.+]");
