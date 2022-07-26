@@ -1,6 +1,6 @@
 ﻿namespace BrainFuckSharp.Lib.Domain
 {
-    internal sealed record class PointerMove : IInstruction, IValue
+    internal record struct PointerMove : IInstruction, IValue
     {
         public int Value { get; set; }
     }

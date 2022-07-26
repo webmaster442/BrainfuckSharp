@@ -1,6 +1,6 @@
 ﻿namespace BrainFuckSharp.Lib.Domain
 {
-    internal sealed record class Increment : IInstruction, IValue
+    internal record struct Increment : IInstruction, IValue
     {
         public int Value { get; set; }
     }

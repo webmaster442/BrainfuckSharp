@@ -15,7 +15,7 @@
             Assert.Multiple(() =>
             {
                 Assert.That(result[0] is Increment, Is.True);
-                Assert.That((result[0] as Increment)?.Value, Is.EqualTo(expected));
+                Assert.That(((Increment)result[0]).Value, Is.EqualTo(expected));
             });
         }
 
@@ -32,7 +32,7 @@
             Assert.Multiple(() =>
             {
                 Assert.That(result[0] is PointerMove, Is.True);
-                Assert.That((result[0] as PointerMove)?.Value, Is.EqualTo(expected));
+                Assert.That(((PointerMove)result[0]).Value, Is.EqualTo(expected));
             });
         }
 
