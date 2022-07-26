@@ -26,7 +26,7 @@ namespace BrainFuckSharp.Lib
             _buffer.Append("\r\n");
         }
 
-        public string GenerateCsharpCode(string brainfFuckCode, string @namespace, int memoryLimit = 4096)
+        public string GenerateCsharpCode(string brainfFuckCode, string @namespace, int memoryLimit = 30_000)
         {
             IList<IInstruction>? instructions = TokenCompressor.Compress(Tokenizer.Tokenize(brainfFuckCode));
 

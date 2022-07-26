@@ -9,7 +9,7 @@ namespace BrainFuckSharp.Lib
         private readonly byte[] _memory;
         private int _programCounter;
 
-        public BrainFuckInterpreter(IBrainFuckConsole console, int memoryLimit = 4096)
+        public BrainFuckInterpreter(IBrainFuckConsole console, int memoryLimit = 30_000)
         {
             _console = console;
             _memory = new byte[memoryLimit];
