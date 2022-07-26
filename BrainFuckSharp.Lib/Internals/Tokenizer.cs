@@ -27,15 +27,15 @@ namespace BrainFuckSharp.Lib.Internals
                 }
                 else if (chr == ']')
                 {
-                    if (maincall)
+                    /*if (maincall)
                     {
                         throw new InvalidOperationException("Extra loop closing");
-                    }
-                    else
-                    {
+                    }*/
+                    /*else
+                    {*/
                         parsed = p;
                         return tokens;
-                    }
+                    ///}
                 }
                 else
                 {

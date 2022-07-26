@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "BrainFuckSharp": {
+      "commandName": "Project",
+      "commandLineArgs": "hellow.bf",
+      "workingDirectory": "E:\\GIT\\BrainFuckSharp\\TestPrograms"
+    }
+  }
+}

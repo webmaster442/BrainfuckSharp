@@ -22,6 +22,20 @@
             }
         };
 
+        private readonly IInstruction[] MultiLoopTestCase = new IInstruction[]
+        {
+            new Loop
+            {
+                new Loop
+                {
+                    new Loop
+                    {
+                        new Output()
+                    }
+                }
+            }
+        };
+
         [Test]
         public void EnsureThat_Tokenizer_TokenizeSimple()
         {
@@ -34,6 +48,13 @@
         {
             IList<IInstruction>? tokens = Tokenizer.Tokenize("[.+]");
             CollectionAssert.AreEqual(LoopTestCase, tokens);
+        }
+
+        [Test]
+        public void EnsureThat_Tokenizer_Tokenize_MultiLoop()
+        {
+            IList<IInstruction>? tokens = Tokenizer.Tokenize("[[[.]]]");
+            CollectionAssert.AreEqual(MultiLoopTestCase, tokens);
         }
 
         [TestCase("#[.+]")]
