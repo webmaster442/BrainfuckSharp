@@ -15,15 +15,20 @@ namespace BrainFuckSharp.Lib
             _memory = new byte[memoryLimit];
         }
 
-        public void Execute(string program)
+        public virtual void Execute(string program)
         {
-            Array.Clear(_memory, 0, _memory.Length);
-            _programCounter = 0;
+            Reset();
             IList<IInstruction>? instructions = TokenCompressor.Compress(Tokenizer.Tokenize(program));
             RunInstructions(instructions);
         }
 
-        private void RunInstructions(IList<IInstruction> instructions, bool insideLoop = false)
+        private protected void Reset()
+        {
+            Array.Clear(_memory, 0, _memory.Length);
+            _programCounter = 0;
+        }
+
+        private protected void RunInstructions(IList<IInstruction> instructions, bool insideLoop = false)
         {
             foreach (IInstruction? instruction in instructions)
             {
