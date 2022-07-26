@@ -58,5 +58,15 @@ namespace BrainFuckSharp.Lib.Domain
         {
             return Instructions.GetEnumerator();
         }
+
+        public void Emmit(IJitWriter jitWriter)
+        {
+            jitWriter.WriteInstruction(OpCode.LoopStart);
+            foreach (var instruction in Instructions)
+            {
+                instruction.Emmit(jitWriter);
+            }
+            jitWriter.WriteInstruction(OpCode.LoopEnd);
+        }
     }
 }

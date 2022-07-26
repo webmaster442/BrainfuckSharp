@@ -2,5 +2,6 @@
 {
     internal interface IInstruction
     {
+        void Emmit(IJitWriter jitWriter);
     }
 }

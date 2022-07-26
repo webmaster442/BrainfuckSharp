@@ -3,5 +3,10 @@
     internal record struct Increment : IInstruction, IValue
     {
         public int Value { get; set; }
+
+        public void Emmit(IJitWriter jitWriter)
+        {
+            jitWriter.WriteInstruction(OpCode.Increment, Value);
+        }
     }
 }
