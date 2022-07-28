@@ -15,6 +15,10 @@ namespace BrainFuckSharp.Lib
             _memory = new byte[memoryLimit];
         }
 
+        public int ProgramCounter => _programCounter;
+
+        public IReadOnlyList<byte> Memory => _memory;
+
         public virtual void Execute(string program)
         {
             Reset();

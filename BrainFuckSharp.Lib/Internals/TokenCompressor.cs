@@ -35,17 +35,22 @@ namespace BrainFuckSharp.Lib.Internals
                         type = TokenType.Pointer;
                         sum += pm.Value;
                     }
+                    else
+                    {
+                        type = TokenType.Other;
+                        result.AddRange(CreateInstructions(current, type, sum));
+                    }
                 }
                 else
                 {
-                    result.AddRange(Create(current, type, sum));
+                    result.AddRange(CreateInstructions(current, type, sum));
                     current = instructions[i];
                     sum = SetSumFromCurrent(current);
                     type = TokenType.Other;
                 }
             }
 
-            result.AddRange(Create(current, type, sum));
+            result.AddRange(CreateInstructions(current, type, sum));
 
 
             return result;
@@ -56,7 +61,7 @@ namespace BrainFuckSharp.Lib.Internals
             return current is IValue value ? value.Value : 1;
         }
 
-        private static IEnumerable<IInstruction> Create(IInstruction instruction, TokenType type, int sum)
+        private static IEnumerable<IInstruction> CreateInstructions(IInstruction instruction, TokenType type, int sum)
         {
             switch(type)
             {
@@ -69,17 +74,17 @@ namespace BrainFuckSharp.Lib.Internals
                 case TokenType.Other:
                     if (instruction is Loop loop)
                     {
-                        if (CanUnroll(loop))
-                        {
-                            foreach (var inst in Unroll(loop))
-                            {
-                                yield return inst;
-                            }
-                        }
-                        else
-                        {
+                        //if (CanUnroll(loop))
+                        //{
+                        //    foreach (var inst in Unroll(loop))
+                        //    {
+                        //        yield return inst;
+                        //    }
+                        //}
+                        //else
+                        //{
                             yield return new Loop { Instructions = Compress(loop.Instructions) };
-                        }
+                        //}
                     }
                     else
                     {
@@ -91,7 +96,7 @@ namespace BrainFuckSharp.Lib.Internals
 
         private static bool CanUnroll(Loop loop)
         {
-            return loop.All(x => x is Increment or PointerMove);
+            return loop.All(x => x is Increment or PointerMove) && loop.Instructions.Count > 1;
         }
 
         private static IEnumerable<IInstruction> Unroll(Loop loop)

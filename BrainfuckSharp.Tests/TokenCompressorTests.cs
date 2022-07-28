@@ -19,6 +19,17 @@
             });
         }
 
+        [TestCase("..")]
+        [TestCase(",,")]
+        [TestCase(".,,..")]
+        public void EnsureThat_TokenCompressor_DoesntCompressUncompressable(string input)
+        {
+            IList<IInstruction>? raw = Tokenizer.Tokenize(input);
+            IList<IInstruction>? result = TokenCompressor.Compress(raw);
+
+            CollectionAssert.AreEqual(raw, result);
+        }
+
         [TestCase(">>>>>><<", 4)]
         [TestCase(">>>>>><<.", 4)]
         [TestCase("><>><<", 0)]
@@ -52,21 +63,6 @@
                     new Output(),
                     new Increment { Value = 1 }
                 }
-            };
-
-            CollectionAssert.AreEqual(expected, result);
-        }
-
-        [Test]
-        public void EnsureThat_TokenCompressor_LoopUnroll()
-        {
-            var raw = Tokenizer.Tokenize("[->+++>>>--<<<<]");
-            var result = TokenCompressor.Compress(raw);
-
-            IInstruction[]? expected = new IInstruction[]
-            {
-                new MultAdd { Offset = 1, Value = 3 },
-                new MultAdd { Offset = 4, Value = -2 },
             };
 
             CollectionAssert.AreEqual(expected, result);
