@@ -8,5 +8,10 @@
         {
             jitWriter.WriteInstruction(OpCode.Increment, Value);
         }
+
+        public override string ToString()
+        {
+            return $"{nameof(Increment)} => {Value}";
+        }
     }
 }

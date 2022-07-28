@@ -9,5 +9,10 @@
         {
             jitWriter.WriteInstruction(OpCode.MultiplyAdd, Offset, Value);
         }
+
+        public override string ToString()
+        {
+            return $"{nameof(MultAdd)} =>  {Offset},{Value}";
+        }
     }
 }

@@ -6,5 +6,10 @@
         {
             jitWriter.WriteInstruction(OpCode.Input);
         }
+
+        public override string ToString()
+        {
+            return nameof(Input);
+        }
     }
 }

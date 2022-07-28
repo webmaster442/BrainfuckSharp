@@ -8,5 +8,10 @@
         {
             jitWriter.WriteInstruction(OpCode.PointerMove, Value);
         }
+
+        public override string ToString()
+        {
+            return $"{nameof(PointerMove)} => {Value}";
+        }
     }
 }

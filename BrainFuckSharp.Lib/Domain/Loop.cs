@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Text;
 
 namespace BrainFuckSharp.Lib.Domain
 {
@@ -67,6 +68,19 @@ namespace BrainFuckSharp.Lib.Domain
                 instruction.Emmit(jitWriter);
             }
             jitWriter.WriteInstruction(OpCode.LoopEnd);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new();
+            sb.AppendLine("Loop => ");
+            sb.AppendLine("{");
+            foreach (var i in Instructions)
+            {
+                sb.AppendFormat("\t{0}\r\n", i);
+            }
+            sb.AppendLine("}");
+            return sb.ToString();
         }
     }
 }
