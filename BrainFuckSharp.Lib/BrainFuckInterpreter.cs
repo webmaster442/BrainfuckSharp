@@ -45,6 +45,11 @@ namespace BrainFuckSharp.Lib
                 else if (instruction is PointerMove pointerMove)
                 {
                     _programCounter += pointerMove.Value;
+                    if (_programCounter < 0)
+                        throw new InvalidOperationException("Pointer underflow");
+                    if (_programCounter > _memory.Length - 1)
+                        throw new InvalidOperationException("Pointer overflow");
+
                 }
                 else if (instruction is Output)
                 {
