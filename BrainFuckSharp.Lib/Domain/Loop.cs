@@ -60,16 +60,6 @@ namespace BrainFuckSharp.Lib.Domain
             return Instructions.GetEnumerator();
         }
 
-        public void Emmit(IJitWriter jitWriter)
-        {
-            jitWriter.WriteInstruction(OpCode.LoopStart);
-            foreach (var instruction in Instructions)
-            {
-                instruction.Emmit(jitWriter);
-            }
-            jitWriter.WriteInstruction(OpCode.LoopEnd);
-        }
-
         public override string ToString()
         {
             StringBuilder sb = new();
@@ -78,6 +68,19 @@ namespace BrainFuckSharp.Lib.Domain
             foreach (var i in Instructions)
             {
                 sb.AppendFormat("\t{0}\r\n", i);
+            }
+            sb.AppendLine("}");
+            return sb.ToString();
+        }
+
+        public string ToCsharp()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("while (memory[pointer] != 0)");
+            sb.AppendLine("{");
+            foreach (var instruction in this)
+            {
+                sb.AppendLine(instruction.ToCsharp());
             }
             sb.AppendLine("}");
             return sb.ToString();

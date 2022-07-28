@@ -41,11 +41,6 @@ namespace BrainFuckSharp.Lib
                     int value = _memory[_programCounter] + increment.Value;
                     _memory[_programCounter] = (byte)value;
                 }
-                else if (instruction is MultAdd mAdd)
-                {
-                    int value = _memory[_programCounter] * mAdd.Value;
-                    _memory[_programCounter + mAdd.Offset] = (byte)value;
-                }
                 else if (instruction is PointerMove pointerMove)
                 {
                     _programCounter += pointerMove.Value;

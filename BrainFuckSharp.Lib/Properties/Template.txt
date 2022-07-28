@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
+using BrainFuckSharp.Lib;
 
-namespace %namespace%
+namespace Brainfuck%ProgramHash%
 {
-    [CompilerGenerated]
-    public static class Program
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    public class BrainFuckProgram : ICompilerContract
     {
-        private static readonly byte[] Memory = new byte[%memorylimit%];
-        private static int CellCounter = 0;
-
-        internal static void MultiplyAdd(int offset, int value)
+        public void Run(ref byte[] memory, ref int pointer)
         {
-            int result = Memory[CellCounter] * value;
-            Memory[CellCounter + offset] = (byte)result;
-        }
-
-        public static void Main(string[] args)
-        {
-%code%
+            %code%
         }
     }
 }

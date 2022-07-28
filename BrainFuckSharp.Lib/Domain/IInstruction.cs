@@ -2,6 +2,6 @@
 {
     internal interface IInstruction
     {
-        void Emmit(IJitWriter jitWriter);
+        string ToCsharp();
     }
 }

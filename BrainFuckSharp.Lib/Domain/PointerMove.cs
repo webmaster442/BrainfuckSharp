@@ -4,9 +4,14 @@
     {
         public int Value { get; set; }
 
-        public void Emmit(IJitWriter jitWriter)
+        public string ToCsharp()
         {
-            jitWriter.WriteInstruction(OpCode.PointerMove, Value);
+            if (Value == -1)
+                return "pointer--;";
+            else if (Value == 1)
+                return "pointer]++;";
+            else
+                return $"pointer += {Value};";
         }
 
         public override string ToString()

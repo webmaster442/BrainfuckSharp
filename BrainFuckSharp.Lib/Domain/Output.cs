@@ -2,9 +2,9 @@
 {
     internal record struct Output : IInstruction
     {
-        public void Emmit(IJitWriter jitWriter)
+        public string ToCsharp()
         {
-            jitWriter.WriteInstruction(OpCode.Output);
+            return "Console.Write((char)memory[pointer]);";
         }
 
         public override string ToString()

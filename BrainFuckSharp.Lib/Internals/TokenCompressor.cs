@@ -74,17 +74,7 @@ namespace BrainFuckSharp.Lib.Internals
                 case TokenType.Other:
                     if (instruction is Loop loop)
                     {
-                        //if (CanUnroll(loop))
-                        //{
-                        //    foreach (var inst in Unroll(loop))
-                        //    {
-                        //        yield return inst;
-                        //    }
-                        //}
-                        //else
-                        //{
-                            yield return new Loop { Instructions = Compress(loop.Instructions) };
-                        //}
+                        yield return new Loop { Instructions = Compress(loop.Instructions) };
                     }
                     else
                     {
@@ -97,43 +87,6 @@ namespace BrainFuckSharp.Lib.Internals
         private static bool CanUnroll(Loop loop)
         {
             return loop.All(x => x is Increment or PointerMove) && loop.Instructions.Count > 1;
-        }
-
-        private static IEnumerable<IInstruction> Unroll(Loop loop)
-        {
-            Dictionary<int, int> deltas = new();
-            int offset = 0;
-            foreach (var cmd in loop.Instructions)
-            {
-                if (cmd is Increment inc)
-                {
-                    if (deltas.ContainsKey(offset))
-                        deltas[offset] = deltas[offset] + inc.Value;
-                    else
-                        deltas[offset] = inc.Value;
-                }
-                else if (cmd is PointerMove pointerMove)
-                {
-                    offset += pointerMove.Value;
-                }
-            }
-
-            if (offset != 0 || deltas[0] != -1)
-            {
-                yield return new Loop { Instructions = Compress(loop.Instructions) };
-            }
-            else
-            {
-                deltas.Remove(0);
-                foreach (var off in deltas.OrderBy(x => x.Key))
-                {
-                    yield return new MultAdd
-                    {
-                        Offset = off.Key,
-                        Value = off.Value
-                    };
-                }
-            }
         }
     }
 }
