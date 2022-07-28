@@ -6,56 +6,47 @@ namespace BrainFuckSharp.Lib.Internals
     {
         public static IList<IInstruction> Tokenize(string input)
         {
-            return Tokenize(input, 0, true, out _);
+            int i = 0;
+            int depth = 0;
+            var result = Tokenize(input, ref i, ref depth);
+
+            if (depth < 0)
+                throw new InvalidOperationException("Extra loop closing in program");
+            else if (depth > 0)
+                throw new InvalidOperationException("Unclosed loop in program");
+
+            return result;
         }
 
-        private static IList<IInstruction> Tokenize(string input, int startindex, bool maincall, out int parsed)
+        private static IList<IInstruction> Tokenize(string input, ref int i, ref int depth)
         {
-            List<IInstruction>? tokens = new List<IInstruction>();
-            int p = 0;
-            for (int i = startindex; i < input.Length; i++)
+            var tokens = new List<IInstruction>();
+            while (i < input.Length)
             {
-                char chr = input[i];
-                if (chr == '[')
+                char token = input[i];
+                if (token == '[')
                 {
-                    Loop? l = new Loop
-                    {
-                        Instructions = Tokenize(input, i + 1, false, out int increment)
-                    };
-                    tokens.Add(l);
-                    i += increment + 1;
+                    i++;
+                    ++depth;
+                    var loop = new Loop { Instructions = Tokenize(input, ref i, ref depth) };
+                    tokens.Add(loop);
                 }
-                else if (chr == ']')
+                else if (token == ']')
                 {
-                    /*if (maincall)
-                    {
-                        throw new InvalidOperationException("Extra loop closing");
-                    }*/
-                    /*else
-                    {*/
-                        parsed = p;
-                        return tokens;
-                    ///}
+                    i++;
+                    --depth;
+                    return tokens;
                 }
                 else
                 {
-                    IInstruction? t = Create(chr);
-                    ++p;
-                    if (t != null)
-                    {
-                        tokens.Add(t);
-                    }
+                    IInstruction? parsed = Create(input[i]);
+                    if (parsed != null)
+                        tokens.Add(parsed);
+                    i++;
                 }
             }
-            if (maincall)
-            {
-                parsed = p;
-                return tokens;
-            }
-            else
-            {
-                throw new InvalidOperationException("Unclosed loop");
-            }
+
+            return tokens;
         }
 
         private static IInstruction? Create(char chr)
